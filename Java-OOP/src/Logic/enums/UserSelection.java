@@ -1,6 +1,6 @@
 package Logic.enums;
 
-public enum userSelection {
+public enum UserSelection {
     Stats,
     Name,
     Attack,

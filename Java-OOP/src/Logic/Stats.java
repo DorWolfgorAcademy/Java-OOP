@@ -1,12 +1,12 @@
 package Logic;
 
 public class Stats {
-    private int physicalAttack;
+    private final int physicalAttack;
     private int curPhysicalAttack;
-    private int physicalDefence;
+    private final int physicalDefence;
     private int curphysicalDefence;
-    private int energy;
-    private int HP;
+    private final int energy;
+    private final int HP;
     private int curHP;
 
     public Stats(int physicalAttack, int physicalDefence, int energy, int HP) {
@@ -28,33 +28,16 @@ public class Stats {
         return physicalAttack;
     }
 
-    public void setPhysicalAttack(int physicalAttack) {
-        this.physicalAttack = physicalAttack;
-    }
 
     public int getPhysicalDefence() {
         return physicalDefence;
     }
 
-    public void setPhysicalDefence(int physicalDefence) {
-        this.physicalDefence = physicalDefence;
-    }
 
     public int getEnergy() {
         return energy;
     }
 
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
-    public int getHP() {
-        return HP;
-    }
-
-    public void setHP(int HP) {
-        this.HP = HP;
-    }
 
     public int getCurPhysicalAttack() {
         return curPhysicalAttack;
@@ -83,7 +66,7 @@ public class Stats {
 
     @Override
     public String toString() {
-        return "Your stats are:\n" +
+        return "stats:\n" +
                 "physicalAttack=" +  curPhysicalAttack +
                 ", physicalDefence=" + curphysicalDefence +
                 ", energy=" + energy +

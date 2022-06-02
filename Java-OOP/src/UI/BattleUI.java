@@ -6,17 +6,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class battleUI {
+public class BattleUI {
     GameLogic logic;
 
-    public battleUI(GameLogic logic) {
+    public BattleUI(GameLogic logic) {
         this.logic = logic;
     }
 
 
     public void battle(){
-        utils.clearConsoleScreen();
+        Utils.clearConsoleScreen();
         System.out.println("Hello " + logic.getUserCharacter().getName() +"\n");
+        logic.changeStatsAccordingToType();
         while(logic.getComputerCharacter().isAlive()&&logic.getUserCharacter().isAlive()){
             if(logic.isUserTurn()){
                 userTurn();
@@ -32,9 +33,11 @@ public class battleUI {
             }
         }
         if(logic.getComputerCharacter().isAlive()){
+            logic.winInBattle(logic.getComputerCharacter());
             System.out.println("You lost to " + logic.getComputerCharacter().getName() +" :(\n");
         }
         else{
+            logic.winInBattle(logic.getUserCharacter());
             System.out.println("You have won ! :)\n ");
         }
     }
@@ -46,18 +49,19 @@ public class battleUI {
             actionNotDone = false;
             String userSelection = getUserSelection();
             switch (userSelection) {
-                case "Stats":
+                case "Stats" -> {
                     System.out.println(logic.getUserCharacter().getStats());
                     actionNotDone = true;
-                    break;
-                case "Name":
-                    System.out.println(logic.getUserCharacter().getName());
+                }
+                case "Name" -> {
+                    System.out.println(logic.getUserCharacter().sayItsName());
                     actionNotDone = true;
-                    break;
-                default:
-                    System.out.println("You chose " +userSelection +"!\n");
+                }
+                default -> {
+                    System.out.println("You chose " + userSelection + "!\n");
                     logic.round(userSelection);
-                    System.out.println("The damage caused is "+logic.getUserCharacter().getDamageCaused()+"!\n");
+                    System.out.println("The damage caused is " + logic.getUserCharacter().getDamageCaused() + "!\n");
+                }
             }
         }
     }
@@ -83,7 +87,7 @@ public class battleUI {
 
     public String getUserSelection(){
         showMenuOptions();
-        int selection = utils.getIntFromUser(1,logic.getUserCharacter().getOptions().size());
+        int selection = Utils.getIntFromUser(1,logic.getUserCharacter().getOptions().size());
         return logic.getUserCharacter().getOptions().get(selection-1);
     }
 

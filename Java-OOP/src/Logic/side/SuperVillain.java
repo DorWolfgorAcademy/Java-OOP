@@ -1,9 +1,9 @@
 package Logic.side;
 
 import Logic.Stats;
-import Logic.enums.enumSide;
+import Logic.enums.EnumSide;
 
-public class SuperVillain extends Side{
+public class SuperVillain extends Side implements SpecialSide{
 
     private int turnsLeft = 0;
     private boolean active = false;
@@ -13,9 +13,9 @@ public class SuperVillain extends Side{
         return "slur";
     }
 
-    @Override
-    public enumSide getSide() {
-        return enumSide.SuperVillain;
+
+    public EnumSide getSide() {
+        return EnumSide.SuperVillain;
     }
 
     @Override

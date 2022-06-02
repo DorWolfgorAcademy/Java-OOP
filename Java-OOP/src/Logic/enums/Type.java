@@ -1,6 +1,6 @@
 package Logic.enums;
 
-public enum type {
+public enum Type {
     Combat,
     Speed,
     Blast,

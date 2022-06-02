@@ -1,11 +1,11 @@
-package Logic.character;
+package Logic.Character;
 
 import Logic.side.Side;
 import Logic.Stats;
-import Logic.enums.enumSide;
-import Logic.enums.specie;
-import Logic.enums.type;
-import Logic.enums.userSelection;
+import Logic.enums.Specie;
+import Logic.enums.Type;
+import Logic.enums.UserSelection;
+import Logic.side.SpecialSide;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,16 +14,16 @@ public abstract class Character {
     protected Stats stats;
     protected int level;
     protected String rank;
-    protected type type;
+    protected Type type;
     protected String name;
     protected boolean defence = false;
     protected Side side;
     protected int damageCaused;
-    protected List<String> options = new LinkedList<String>();
+    protected List<String> options = new LinkedList<>();
 
 
 
-    public Character(Stats stats, String rank, Logic.enums.type type, String name, Side side) {
+    public Character(Stats stats, String rank, Type type, String name, Side side) {
         this.stats = stats;
         this.rank = rank;
         this.type = type;
@@ -38,13 +38,13 @@ public abstract class Character {
         options.add("Name");
         options.add("Attack");
         options.add("Defend");
-        if(side.specialSide() !=null){
-            options.add(side.specialSide());
+        if(side instanceof SpecialSide s){
+            options.add(s.specialSide());
         }
     }
 
-    public abstract specie getSpecie();
-    public abstract void makeAction(Character defender, userSelection userSelection);
+    public abstract Specie getSpecie();
+    public abstract void makeAction(Character defender, UserSelection userSelection);
     public void resetStats(){
         stats.resetCurStats();
     }
@@ -53,7 +53,7 @@ public abstract class Character {
         return stats.getCurHP()>0;
     }
 
-    public void Attack(Character character){//returns the amount of HP that's caused
+    public void attack(Character character){//returns the amount of HP that's caused
         if(character.defence){
             character.defence=false;
             if(Math.random()<=0.7){
@@ -67,30 +67,26 @@ public abstract class Character {
     }
 
     public void changeStatsAccordingToType(Character character){
-        if(this.type == Logic.enums.type.Universal||character.type== Logic.enums.type.Universal){
+        if(this.type == Type.Universal||character.type== Type.Universal){
             return;
         }
-        if((this.type == Logic.enums.type.Blast&&character.type == Logic.enums.type.Combat)||
-                (this.type == Logic.enums.type.Combat&&character.type == Logic.enums.type.Speed)||
-                (this.type == Logic.enums.type.Speed&&character.type == Logic.enums.type.Blast)){
+        if((this.type == Type.Blast&&character.type == Type.Combat)||
+                (this.type == Type.Combat&&character.type == Type.Speed)||
+                (this.type == Type.Speed&&character.type == Type.Blast)){
             this.stats.setCurPhysicalAttack((int) (this.stats.getPhysicalAttack()*0.1 + this.stats.getCurPhysicalAttack()));
         }
     }
 
-    public void Defence(){
+    public void defence(){
         damageCaused = 0;
         defence = true;
     }
 
     public String sayItsName(){
-        if(side.getSide() == enumSide.Natural){
+        if(!(side instanceof SpecialSide)){
             return name + "\nI'm Natural!\n";
         }
         return name;
-    }
-
-    public String showItsStats(){
-        return stats.toString();
     }
 
     public Stats getStats() {
@@ -101,56 +97,16 @@ public abstract class Character {
         this.stats = stats;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     public void incLevel() {
         level++;
-    }
-
-    public void decLevel() {
-        level--;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
-    public Logic.enums.type getType() {
-        return type;
-    }
-
-    public void setType(Logic.enums.type type) {
-        this.type = type;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean isDefence() {
-        return defence;
-    }
-
-    public void setDefence(boolean defence) {
-        this.defence = defence;
-    }
-
     public Side getSide() {
         return side;
-    }
-
-    public void setSide(Side side) {
-        this.side = side;
     }
 
     public int getDamageCaused() {
@@ -164,10 +120,10 @@ public abstract class Character {
     @Override
     public String toString() {
         return "Character name=" + name + "\n"+
-                "stats=" + stats.toString() +
+                stats.toString() +
                 "level=" + level + "\n" +
                 "rank=" + rank + "\n" +
                 "type=" + type.toString() + "\n"+
-                "side=" + side.toString() + "\n";
+                "side=" + side.toString();
     }
 }

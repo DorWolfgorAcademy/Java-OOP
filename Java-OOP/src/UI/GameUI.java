@@ -1,6 +1,6 @@
 package UI;
 
-import Logic.character.Character;
+import Logic.Character.Character;
 import Logic.GameLogic;
 
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 public class GameUI {
     GameLogic logic = new GameLogic();
-    battleUI battle;
+    BattleUI battle;
     String userName;
 
     public GameUI(){
-        battle = new battleUI(logic);
+        battle = new BattleUI(logic);
     }
     public void initUserName(){
         System.out.println("Please enter your name:");
@@ -29,7 +29,7 @@ public class GameUI {
         while(continuePlaying){
             SelectionPhase();
             battle.battle();
-            continuePlaying = utils.getBooleanFromUser();
+            continuePlaying = Utils.getBooleanFromUser();
         }
         System.out.println("Thank you for playing!\n");
     }
@@ -40,8 +40,8 @@ public class GameUI {
         for (int i = 1; i <= characters.size(); i++) {
             System.out.println((i) + ".) " + characters.get(i-1).toString());
         }
-        logic.setUserCharacter(characters.get(utils.getIntFromUser(1, characters.size())-1));
-        utils.clearConsoleScreen();
+        logic.setUserCharacter(characters.get(Utils.getIntFromUser(1, characters.size())-1));
+        Utils.clearConsoleScreen();
         System.out.println("Great!\n you chose :" + logic.getUserCharacter().toString());
         Random rand = new Random();
         logic.setComputerCharacter(characters.get(rand.nextInt(1, characters.size())-1));

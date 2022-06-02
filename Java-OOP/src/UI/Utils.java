@@ -3,7 +3,7 @@ package UI;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class utils {
+public class Utils {
     public static int getIntFromUser(int min,int max){
         Scanner sc = new Scanner(System.in);
         while(true) {

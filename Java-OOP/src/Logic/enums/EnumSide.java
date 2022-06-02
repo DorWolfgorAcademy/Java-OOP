@@ -1,6 +1,6 @@
 package Logic.enums;
 
-public enum enumSide {
+public enum EnumSide {
     SuperHero,
     SuperVillain,
     Natural

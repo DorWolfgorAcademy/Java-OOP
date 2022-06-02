@@ -1,6 +1,6 @@
 package Logic.enums;
 
-public enum specie {
+public enum Specie {
     Human,
     Alien,
     Mutant,
