@@ -24,7 +24,7 @@ public class Human extends Character{
         switch (userSelection) {
             case Attack -> attack(defender);
             case Defend -> defence();
-            case SpecialAbility -> {
+            case Slur, Moral -> {
                 SpecialSide s = (SpecialSide) side;
                 s.activeSide(this.stats, defender.stats);
             }
@@ -33,7 +33,7 @@ public class Human extends Character{
     }
 
     public void resetStats(){
-        resetStats();
+        super.resetStats();
         stats.setCurPhysicalAttack((int) (stats.getPhysicalAttack()*1.2));
     }
 

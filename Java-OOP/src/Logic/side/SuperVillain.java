@@ -2,15 +2,15 @@ package Logic.side;
 
 import Logic.Stats;
 import Logic.enums.EnumSide;
+import Logic.enums.UserSelection;
 
 public class SuperVillain extends Side implements SpecialSide{
-
     private int turnsLeft = 0;
     private boolean active = false;
 
     @Override
-    public String specialSide() {
-        return "slur";
+    public UserSelection specialSide() {
+        return UserSelection.Slur;
     }
 
 
@@ -21,7 +21,8 @@ public class SuperVillain extends Side implements SpecialSide{
     @Override
     public void activeSide(Stats statsAttacker, Stats statsDefender) {
         if(!active){
-            statsDefender.setCurphysicalDefence((int) (statsDefender.getCurphysicalDefence()-statsDefender.getPhysicalDefence()*0.1));
+            double specialCause = 0.1;
+            statsDefender.setCurphysicalDefence((int) (statsDefender.getCurphysicalDefence()-statsDefender.getPhysicalDefence()* specialCause));
             active = true;
         }
         turnsLeft = 4;
@@ -40,6 +41,6 @@ public class SuperVillain extends Side implements SpecialSide{
 
     @Override
     public String toString() {
-        return "SuperVillain\n";
+        return "Super Villain\n";
     }
 }
