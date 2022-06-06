@@ -6,5 +6,6 @@ public enum UserSelection {
     Attack,
     Defend,
     SpecialAttack,
-    SpecialAbility
+    Slur,
+    Moral
 }

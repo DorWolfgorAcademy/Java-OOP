@@ -1,36 +1,26 @@
 package Logic;
 
-import Logic.Character.Alien;
 import Logic.Character.Character;
-import Logic.Character.Human;
-import Logic.Character.Mutant;
-import Logic.enums.Type;
 import Logic.enums.UserSelection;
 import Logic.side.SpecialSide;
-import Logic.side.SuperHero;
-import Logic.side.SuperVillain;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class GameLogic {
-    private final List<Character> characters = new LinkedList<>();
+    private final List<Character> characters;
     private Character userCharacter;
     private Character computerCharacter;
     private boolean userTurn = true;
+
+    public GameLogic() {
+        characters = CharactersFactory.initCharacters();
+    }
 
     public List<Character> getCharacters() {
         return characters;
     }
 
-    public void initCharacters(){
-        characters.add(new Mutant(new Stats(70, 90, 7,100), "XMen",
-                Type.Universal, "Dark Phoenix", new SuperVillain()));
-        characters.add(new Human(new Stats(40, 50, 8,52), "Avengers",
-                Type.Combat, "Captain America", new SuperHero()));
-        characters.add(new Alien(new Stats(30, 55, 7,87), "Guardians of the Galaxy",
-                 Type.Speed,"Gamorrah",new SuperHero() ));
-    }
 
     public void winInBattle(Character character){
         character.incLevel();
@@ -43,7 +33,7 @@ public class GameLogic {
         computerCharacter.changeStatsAccordingToType(userCharacter);
     }
 
-    public void round(String userSelection) {
+    public void round(UserSelection userSelection) {
         if (userTurn) {
             makeAction(userCharacter, computerCharacter, userSelection);
         } else {
@@ -53,22 +43,10 @@ public class GameLogic {
         decideOnTurnOfUser();
     }
 
-    public void makeAction(Character attacker, Character defender, String userSelection) throws IllegalArgumentException{
-        boolean actionNotDone = true;
-        while(actionNotDone) {
-            actionNotDone = false;
-            switch (userSelection) {
-                case "Attack" -> attacker.makeAction(defender, UserSelection.Attack);
-                case "Defend" -> attacker.makeAction(defender, UserSelection.Defend);
-                case "Special attack" -> attacker.makeAction(defender, UserSelection.SpecialAttack);
-                default -> attacker.makeAction(defender, UserSelection.SpecialAbility);
-            }
-        }
+    public void makeAction(Character attacker, Character defender, UserSelection userSelection) throws IllegalArgumentException{
+        attacker.makeAction(defender,userSelection);
         if(attacker.getSide() instanceof SpecialSide s){
             s.deActivateSide(attacker.getStats(),defender.getStats());
-        }
-        if(defender.getSide() instanceof SpecialSide s){
-            s.deActivateSide(defender.getStats(),attacker.getStats());
         }
     }
 

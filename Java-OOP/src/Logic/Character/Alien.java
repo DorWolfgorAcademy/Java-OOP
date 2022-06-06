@@ -7,10 +7,13 @@ import Logic.enums.Specie;
 import Logic.enums.UserSelection;
 import Logic.side.SpecialSide;
 
+
+
 public class Alien extends Character{
+    private static final double moreAttack = 1.2;
     public Alien(Stats stats, String rank, Type type, String name, Side side) {
         super(stats, rank, type, name,side);
-        stats.setCurphysicalDefence((int) (stats.getPhysicalDefence()*1.2));
+        stats.setCurphysicalDefence((int) (stats.getPhysicalDefence()*moreAttack));
     }
 
     @Override
@@ -23,7 +26,7 @@ public class Alien extends Character{
         switch (userSelection) {
             case Attack -> attack(defender);
             case Defend -> defence();
-            case SpecialAbility -> {
+            case Slur, Moral -> {
                 SpecialSide s = (SpecialSide) side;
                 s.activeSide(this.stats, defender.stats);
             }
@@ -32,7 +35,7 @@ public class Alien extends Character{
     }
 
     public void resetStats(){
-        resetStats();
+        super.resetStats();
         stats.setCurphysicalDefence((int) (stats.getPhysicalDefence()*1.2));
     }
 

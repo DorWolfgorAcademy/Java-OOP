@@ -14,7 +14,7 @@ public class Mutant extends Character{
 
     public Mutant(Stats stats, String rank, Type type, String name, Side side) {
         super(stats, rank, type, name,side);
-        options.add("Special attack");
+        options.add(UserSelection.SpecialAttack);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Mutant extends Character{
             specialAttack(defender);
         }
         switch (userSelection) {
-            case Attack -> attack(defender);
+            case Attack -> this.attack(defender);
             case Defend -> defence();
-            case SpecialAbility -> {
+            case Slur, Moral -> {
                 SpecialSide s = (SpecialSide) side;
                 s.activeSide(this.stats, defender.stats);
             }
@@ -43,11 +43,11 @@ public class Mutant extends Character{
     public void attack(Character character) {
         if(specialAttackDone){
             int damageCausedBySpecialAttack = damageCaused;
-            attack(character);
+            super.attack(character);
             damageCaused +=damageCausedBySpecialAttack;
         }
         else {
-            attack(character);
+            super.attack(character);
         }
     }
 

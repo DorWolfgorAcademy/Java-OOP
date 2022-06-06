@@ -8,23 +8,20 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import static UI.Utils.getRandomNumber;
+import static UI.Utils.initUserName;
+
 public class GameUI {
-    GameLogic logic = new GameLogic();
-    BattleUI battle;
-    String userName;
+    private final GameLogic logic = new GameLogic();
+    private final BattleUI battle;
+    private String userName;
 
     public GameUI(){
         battle = new BattleUI(logic);
     }
-    public void initUserName(){
-        System.out.println("Please enter your name:");
-        Scanner sc = new Scanner(System.in);
-        userName = sc.nextLine();
-    }
 
     public void gameOn(){
-        initUserName();
-        logic.initCharacters();
+        userName = initUserName();
         boolean continuePlaying = true;
         while(continuePlaying){
             SelectionPhase();
@@ -43,8 +40,8 @@ public class GameUI {
         logic.setUserCharacter(characters.get(Utils.getIntFromUser(1, characters.size())-1));
         Utils.clearConsoleScreen();
         System.out.println("Great!\n you chose :" + logic.getUserCharacter().toString());
-        Random rand = new Random();
-        logic.setComputerCharacter(characters.get(rand.nextInt(1, characters.size())-1));
+        int randomNumber = getRandomNumber(0, characters.size()-1);
+        logic.setComputerCharacter(characters.get(randomNumber));
         System.out.println("Your opponent will be :" + logic.getComputerCharacter().toString());
         System.out.println("Good luck " + userName + "!");
         try {

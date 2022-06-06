@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Character {
+    private static final double defend = 0.7;
     protected Stats stats;
     protected int level;
     protected String rank;
@@ -19,7 +20,7 @@ public abstract class Character {
     protected boolean defence = false;
     protected Side side;
     protected int damageCaused;
-    protected List<String> options = new LinkedList<>();
+    protected List<UserSelection> options = new LinkedList<>();
 
 
 
@@ -34,10 +35,10 @@ public abstract class Character {
     }
 
     private void makeOptions(){
-        options.add("Stats");
-        options.add("Name");
-        options.add("Attack");
-        options.add("Defend");
+        options.add(UserSelection.Stats);
+        options.add(UserSelection.Name);
+        options.add(UserSelection.Attack);
+        options.add(UserSelection.Defend);
         if(side instanceof SpecialSide s){
             options.add(s.specialSide());
         }
@@ -56,7 +57,7 @@ public abstract class Character {
     public void attack(Character character){//returns the amount of HP that's caused
         if(character.defence){
             character.defence=false;
-            if(Math.random()<=0.7){
+            if(Math.random()<=defend){
                 damageCaused = 0;
                 return;
             }
@@ -113,7 +114,7 @@ public abstract class Character {
         return damageCaused;
     }
 
-    public List<String> getOptions() {
+    public List<UserSelection> getOptions() {
         return options;
     }
 

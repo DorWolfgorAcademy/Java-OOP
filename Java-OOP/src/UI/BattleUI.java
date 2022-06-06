@@ -1,6 +1,7 @@
 package UI;
 
 import Logic.GameLogic;
+import Logic.enums.UserSelection;
 
 import java.util.List;
 import java.util.Random;
@@ -47,13 +48,13 @@ public class BattleUI {
         System.out.println("Now it's Your turn\n");
         while(actionNotDone) {
             actionNotDone = false;
-            String userSelection = getUserSelection();
+            UserSelection userSelection = getUserSelection();
             switch (userSelection) {
-                case "Stats" -> {
+                case Stats -> {
                     System.out.println(logic.getUserCharacter().getStats());
                     actionNotDone = true;
                 }
-                case "Name" -> {
+                case Name -> {
                     System.out.println(logic.getUserCharacter().sayItsName());
                     actionNotDone = true;
                 }
@@ -68,7 +69,7 @@ public class BattleUI {
 
     public void computerTurn(){
         System.out.println("Now it's the turn of "+logic.getComputerCharacter().getName() +"\n");
-        List<String> options = logic.getComputerCharacter().getOptions();
+        List<UserSelection> options = logic.getComputerCharacter().getOptions();
         Random rand = new Random();
         int selection = rand.nextInt(3,options.size());
         System.out.println("The computer chose "+options.get(selection-1)+"\n");
@@ -77,15 +78,15 @@ public class BattleUI {
     }
 
     public void showMenuOptions(){
-        List<String> options = logic.getUserCharacter().getOptions();
+        List<UserSelection> options = logic.getUserCharacter().getOptions();
         int i=1;
-        for (String opt:options) {
+        for (UserSelection opt:options) {
             System.out.println(i+".) "+opt);
             i++;
         }
     }
 
-    public String getUserSelection(){
+    public UserSelection getUserSelection(){
         showMenuOptions();
         int selection = Utils.getIntFromUser(1,logic.getUserCharacter().getOptions().size());
         return logic.getUserCharacter().getOptions().get(selection-1);
